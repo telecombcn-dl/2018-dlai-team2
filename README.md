@@ -104,8 +104,50 @@ In the following pictures are displayed the results of our trained autoencoder o
 #### Images with gray blocks
 ![anime images with blocks](https://github.com/telecombcn-dl/2018-dlai-team2/blob/master/Results/anime_blocks.png?raw=true)
 
+## Variational Autoencoder (VAE)
 
+In order to transform our autoencoder into a generative model some adjustments have to be made:
+- The latent space has to be restricted to follow a defined probability density functions such as a Gaussian distribution. In the end we want to generate new data from a previously trained autoencoder by sampling from this latent space.
+- This moreover creates another problem for us: Since we want to train our network using gradient descent and backpropagation cannot flow through random nodes, we have to apply the so-called reparameterization trick. Instead of sampling from the distribution at the end of the encoder, we sample from an ε, that is normally distributed and further on multiplied to the variance of our encoder distribution. Thus, the random node is "outsourced" and gradient descent can be calculated without any problems.
 
+![VAE Block Diagram](https://keitakurita.files.wordpress.com/2017/12/vae_complete.png?resize=750%2C322)
+
+- We extend our loss function (the reconstruction loss) with an additional regularization term, the Kullback-Leibler (KL) divergence, which measures the difference between the distribution (in the encoder), that projects our data into the latent space, and our true latent probability distribution ([Kristiadi: Variational Autoencoder: Intuition and Implementation](https://wiseodd.github.io/techblog/2016/12/10/variational-autoencoder/)).
+
+### VAE for the MNIST dataset
+
+As for the denoising autoencoder we start to train it first with the standard MNIST dataset in order to understand how the VAE essentially works. We keep the same structure that is composed of multiple convolutional and pooling layers, and apply the changes mentioned in the paragraph above, that adds the reparameterization trick in the bottleneck and the KL divergence term to our loss function.
+
+After the neural network has been training for 100 epochs and a batch size of 128, we can randomly generate noise and sample from the decoder part of our network to obtain new digits:
+
+![Sampled digits](https://github.com/telecombcn-dl/2018-dlai-team2/blob/master/Results/mnist_2_dim.png) 
+
+For a neural network as ours with a two-dimensional bottleneck, the distribution of the generated digits in the latent space can be easily visualized as follows:
+
+![Latent manifold](https://github.com/telecombcn-dl/2018-dlai-team2/blob/master/Results/mnist_latent_space.png) 
+![Latent manifold](https://github.com/telecombcn-dl/2018-dlai-team2/blob/master/Results/mnist_latent_space_2.png)
+
+### VAE for the Anime dataset
+
+After testing the VAE with the standard MNIST dataset, we move on to investigate its performance again on a more complex dataset, the Anime dataset. The structure of our VAE stays the same, but we experiment now with the dimensionality of our latent variable space.
+
+### Dimensions in latent space = 2
+![Anime VAE dim = 2](https://github.com/telecombcn-dl/2018-dlai-team2/blob/master/Results/anime_2_dim.png) 
+### Dimensions in latent space = 5
+![Anime VAE dim = 5](https://github.com/telecombcn-dl/2018-dlai-team2/blob/master/Results/anime_5_dim.png) 
+### Dimensions in latent space = 100
+![Anime VAE dim = 100](https://github.com/telecombcn-dl/2018-dlai-team2/blob/master/Results/anime_100_dim.png) 
+
+### Discussion
+It can be clearly seen that the features in the newly generated images increase with higher dimensionality in our latent space. The image itself is compressed less in the bottleneck and therefore, more detailed pictures can be generated out of this latent space. 
+Another surprising aspect are colors of the generated images, that seem to vanish for lower dimensional sizes due to compression.
+
+## Future Work
+
+To furthermore investigate the behavior of variational autencoders and strengthen their performance, the simple Gaussian distribution can be mapped to more complex distributions in order to achieve even better results. This method is called [Normalizing Flows](https://arxiv.org/abs/1505.05770).
 
 # Resources:
-- [Keras](https://blog.keras.io/building-autoencoders-in-keras.html)
+- [Keras Tutorial on Autoencoders](https://blog.keras.io/building-autoencoders-in-keras.html)
+- [Kristiadi: Variational Autoencoder: Intuition and Implementation](https://wiseodd.github.io/techblog/2016/12/10/variational-autoencoder/)
+- [MNIST Dataset](http://yann.lecun.com/exdb/mnist/)
+- [Anime Dataset](http://www.nurs.or.jp/~nagadomi/animeface-character-dataset/data/animeface-character-dataset.zip)
