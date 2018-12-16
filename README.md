@@ -1,11 +1,11 @@
 # \[DLAI 2018\] Team 2: Autoencoder
 
 This project is focused in autoencoders and their application for denoising and inpainting of noisey images. Furthermore, it was investigated how these autoencoders can be used as generative models, so-called Variational Autoencoders (VAEs).
-It was conducted in the context of the course [Deep Learning for Artificial Intelligence at UPC (Autumn 2018)](https://telecombcn-dl.github.io/2018-dlai/) by the students Michaela Jurkova, Michał Krzemiński, Michal Šimek and Daniel Seifert.
+It was conducted in the context of the course [Deep Learning for Artificial Intelligence at UPC (Autumn 2018)](https://telecombcn-dl.github.io/2018-dlai/) by the students Michaela Jurková, Michał Krzemiński, Michal Šimek and Daniel Seifert.
 
 ## Motivation:
 
-As none of use worked on Deep Learning before, we chose to start off with the rather simple topic of autoencoders in order to learn how to built a neural network, how to train it and how the setting of hyperparameters affect its performance. Moreover, we found interest in autoencoders due to their versatile applications in pattern recognition and classification, denoising and even in generation of completely new data.
+As none of us worked on Deep Learning before, we chose to start off with the rather simple topic of autoencoders in order to learn how to built a neural network, how to train it and how the setting of hyperparameters affect its performance. Moreover, we found interest in autoencoders due to their versatile applications in pattern recognition and classification, denoising and even in generation of completely new data.
 
 ## Goals:
 
